@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amendments Response</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f2027;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.1) 25%, transparent 26%, transparent 74%, rgba(255, 255, 255, 0.1) 75%, transparent 76%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.1) 25%, transparent 26%, transparent 74%, rgba(255, 255, 255, 0.1) 75%, transparent 76%, transparent);
+            background-size: 50px 50px;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgb(61, 169, 151);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-group {
+            flex: 1;
+            margin-right: 20px;
+            background-color: rgb(27, 75, 67);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .form-group .red-button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            border-radius: 12px;
+        }
+        .form-group .orange-button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #ff8c1a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            border-radius: 12px;
+        }
+        .form-group .green-button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 12px;
+        }
+        .form-group .purple-button {
+            padding: 10px 15px;
+            background-color: #800080;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 12px;
+        }
+        .form-group .clear-button {
+            padding: 10px 15px;
+            background-color: rgb(54, 118, 181);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 12px;
+        }
+        .form-group button.selected {
+            opacity: 0.8;
+        }
+        .form-group button:hover {
+            opacity: 0.8;
+        }
+        .answer-container {
+            flex: 2;
+        }
+        .answer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgb(61, 169, 151);
+            border-radius: 8px;
+            white-space: pre-wrap; /* Preserves formatting for new lines and spaces */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <h1 style="color: white;">Amendments Response</h1>
+            <button class="red-button" onclick="generateAndCopy('Denied')">Denied</button>
+            <button class="red-button" onclick="generateAndCopy('AI')">AI</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Understanding Roleplay')">Understanding Roleplay</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Powergaming')">Powergaming</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'NVL')">NVL</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Backstory Rules')">Backstory Rules</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Backstory Elaborate')">Backstory Elaborate</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Goals')">Goals</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'BurgeyShot')">BurgeyShot</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'New Car')">New Car</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Prison Interactions')">Prison Interactions</button>
+            <button class="orange-button" onclick="toggleSelection(this, 'Prison Report To Staff')">Prison Report To Staff</button>
+            <button class="green-button" onclick="generateResponse()">Generate Response</button>
+            <button class="purple-button" onclick="copyToClipboard()">Copy to Clipboard</button>
+            <button class="clear-button" onclick="clearResponse()">Clear</button>
+        </div>
+        <div class="answer-container">
+            <div class="answer" id="answer"></div>
+        </div>
+    </div>
+    <script>
+        const selectedOptions = new Set();
+
+        function toggleSelection(button, value) {
+            if (selectedOptions.has(value)) {
+                selectedOptions.delete(value);
+                button.classList.remove('selected');
+            } else {
+                selectedOptions.add(value);
+                button.classList.add('selected');
+            }
+            generateResponse(); // Update the response as selections are made
+        }
+
+        function generateResponse() {
+            let response = `Hello @, thank you for taking the time to submit an allowlist application with us! Your application is currently pending alterations, as not all of your responses currently meet our criteria for allowlisting. Before we can accept your application we would like you to amend your responses to the following questions:\n\n`;
+            
+            selectedOptions.forEach(option => {
+                switch(option) {
+                    case 'Understanding Roleplay':
+                        response += `1. Describe your understanding of what it means to provide good quality, serious roleplay beyond just staying in character:\n` +
+                        `**Please elaborate on your response to show a more thorough understanding. Our Roleplay Rules 1. And 2. provide examples that can help.**\n\n`;
+                        break;
+                    case 'Powergaming':
+                        response += `2. In your own words, and using multiple examples other than meta-gaming, describe your understanding of power-gaming and how it hinders roleplay:\n` +
+                        `**Please elaborate on your response to show a more thorough understanding of power-gaming and provide at least 2 examples. Our Roleplay Rule on Power Gaming provides examples that can help.**\n\n`;
+                        break;
+                    case 'NVL':
+                        response += `3. In your own words, and using multiple examples, describe your understanding of not valuing the lives of others (NVL) and how it hinders roleplay:\n` +
+                        `**Please elaborate on your response to show a more thorough understanding of what it means to value lives and provide at least 2 examples. Our Roleplay Rules feature multiple examples that can help.**\n\n`;
+                        break;
+                    case 'Backstory Rules':
+                        response += `4. Please tell us about the character(s) you plan on playing here, such as who they are, what their backstory is, and what lead them to be in our city:\n` +
+                        `**Please ensure that your character fits within our Roleplay Rules and standards.**\n\n`;
+                        break;
+                    case 'Backstory Elaborate':
+                        response += `4. Please tell us about the character(s) you plan on playing here, such as who they are, what their backstory is, and what lead them to be in our city:\n` +
+                        `**Please elaborate on your character's backstory to show the quality of RP we expect from our players.**\n\n`;
+                        break;
+                    case 'Goals':
+                        response += `5. What does your character hope to accomplish in this city?:\n` +
+                        `**Please ensure that your character’s goals fit within our Roleplay Rules and standards.**\n\n`;
+                        break;
+                    case 'BurgeyShot':
+                        response += `6. You have just left BurgerShot when two individuals approach you with weapons and demand that you hand over your order, so you do. Later, you are walking with three of your friends and pass the same two individuals sitting alone at Legion Square, where they begin to tease you in regards to the BurgerShot robbery. How do you proceed?:\n` +
+                        `**Please elaborate on your response to show the quality of roleplay interactions that are expected of our players. (We want to put roleplay > gunplay/PVP at all times)**\n\n`;
+                        break;
+                    case 'New Car':
+                        response += `7. You're new to the city and a shady looking guy offers to sell you a cheap car in cash only. Later while driving, you are pulled over by the police and are detained because the car is stolen. What do you say to try to talk your way out of jail?:\n` +
+                        `**Please elaborate on your response to show the quality roleplay interactions that are expected of our players. (We want to put roleplay > gunplay/PVP at all times)**\n\n`;
+                        break;
+                    case 'Prison Interactions':
+                        response += `8. While in prison, another inmate approaches you and tells you that he's found a way out of prison that involves using an emote to phase through a door and offers to use it to break you out. How do you proceed?:\n` +
+                        `**Please elaborate on your response to show the quality roleplay interactions that are expected of our players.**\n\n`;
+                        break;
+                    case 'Prison Report To Staff':
+                        response += `8. While in prison, another inmate approaches you and tells you that he's found a way out of prison that involves using an emote to phase through a door and offers to use it to break you out. How do you proceed?:\n` +
+                        `**Please confirm to report any rule break your encounter either by doing /a in game or opening a ticket in discord**\n\n`;
+                        break;
+                }
+            });
+
+            response += `Please reply to this ticket with your amended responses. If your amendments meet our criteria your application will be accepted and you will be allowlisted. If your amendments do not meet our criteria, or if you do not provide a response within 24 hours, your application will be denied and you will be required to re-apply.\n\n` +
+            `Thank you again for applying, and we hope to see you on the server some time soon! :)`;
+
+            document.getElementById('answer').innerText = response;
+        }
+
+        function generateAndCopy(type) {
+            let response = '';
+            switch(type) {
+                case 'Denied':
+                    response = `Hello @ , thank you again for taking the time to apply for allowlisting.\n\n` +
+                    `Unfortunately your application has been denied at this time due to the lack of effort. We are looking for more in depth, detailed answers showing you understand the rules and what we expect when it comes to role playing in this server. Take this time to put some thought into your answers if you wish to reapply. We encourage you to submit a new application in 7 days. Also, please take the time to re-read our rules and submit a Support Ticket if you have any questions.\n\n` +
+                    `We sincerely hope your next application is successful!`;
+                    break;
+                case 'AI':
+                    response = `Hello @ , appreciate your interest in joining ProductionRP. After careful review and consideration, we regret to inform you that your application for allowlist access has been denied.\n\n` +
+                    `Our allowlist program aims to maintain a controlled and secure environment for our community members. As part of our evaluation process, we carefully assess the use of various technologies and tools. Unfortunately, after a thorough assessment, we have determined that the use of AI in the context of ProductionRP does not align with our current guidelines and objectives.\n\n` +
+                    `We understand the potential benefits that AI can offer, but we have decided to prioritize other approaches that align more closely with our vision for the community. This decision was made after careful consideration of the impact on user experience, security, and the overall integrity of the platform.\n\n` +
+                    `We sincerely appreciate the effort you put into your application and your interest in contributing to the ProductionRP community. While we are unable to proceed with your application at this time, we encourage you to explore alternative avenues for involvement within the community.\n\n` +
+                    `Thank you for your understanding. We wish you the best in your future endeavors.\n\n` +
+                    `You may reapply in 7 days.`;
+                    break;
+            }
+            document.getElementById('answer').innerText = response;
+            copyToClipboard(response);
+        }
+
+        function clearResponse() {
+            document.getElementById('answer').innerText = '';
+            selectedOptions.clear();
+            document.querySelectorAll('.form-group button.selected').forEach(button => {
+                button.classList.remove('selected');
+            });
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
